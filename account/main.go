@@ -9,6 +9,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/CasperDev394/golandvue/handler"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,10 +18,8 @@ func main() {
 
 	router := gin.Default()
 
-	router.GET("/api/account", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"hello": "casper112",
-		})
+	handler.NewHandler(&handler.Config{
+		R: router,
 	})
 
 	srv := &http.Server{
