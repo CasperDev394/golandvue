@@ -19,12 +19,12 @@ func main() {
 
 	router.GET("/api/account", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
-			"hello": "suckaz",
+			"hello": "casper112",
 		})
 	})
 
 	srv := &http.Server{
-		Addr:    ":8000",
+		Addr:    ":8080",
 		Handler: router,
 	}
 
