@@ -1,4 +1,4 @@
-module github.com/CasperDev394/golandvue
+module github.com/CasperDev394/golandvue/account
 
 go 1.19
 

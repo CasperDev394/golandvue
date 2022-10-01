@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/CasperDev394/golandvue/model"
-	"github.com/CasperDev394/golandvue/model/mocks"
+	"github.com/CasperDev394/golandvue/account/model"
+	"github.com/CasperDev394/golandvue/account/model/mocks"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"

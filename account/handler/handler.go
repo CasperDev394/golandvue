@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/CasperDev394/golandvue/model"
+	"github.com/CasperDev394/golandvue/account/model"
 	"github.com/gin-gonic/gin"
 )
 

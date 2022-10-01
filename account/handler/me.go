@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/CasperDev394/golandvue/model"
-	"github.com/CasperDev394/golandvue/model/apperrors"
+	"github.com/CasperDev394/golandvue/account/model"
+	"github.com/CasperDev394/golandvue/account/model/apperrors"
 	"github.com/gin-gonic/gin"
 )
 

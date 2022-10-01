@@ -7,9 +7,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/CasperDev394/golandvue/model"
-	"github.com/CasperDev394/golandvue/model/apperrors"
-	"github.com/CasperDev394/golandvue/model/mocks"
+	"github.com/CasperDev394/golandvue/account/model"
+	"github.com/CasperDev394/golandvue/account/model/apperrors"
+	"github.com/CasperDev394/golandvue/account/model/mocks"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"

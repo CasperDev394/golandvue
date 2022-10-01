@@ -3,7 +3,7 @@ package mocks
 import (
 	"context"
 
-	"github.com/CasperDev394/golandvue/model"
+	"github.com/CasperDev394/golandvue/account/model"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/mock"
 )

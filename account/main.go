@@ -9,7 +9,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/CasperDev394/golandvue/handler"
+	"github.com/CasperDev394/golandvue/account/handler"
 	"github.com/gin-gonic/gin"
 )
 
