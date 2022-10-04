@@ -42,9 +42,9 @@ func (s *UserService) Signup(ctx context.Context, u *model.User) error {
 		return err
 	}
 
-	if err := s.UserRepository.Create(ctx, u); err != nil {
-		return err
-	}
+	//if err := s.UserRepository.Create(ctx, u); err != nil {
+	//	return err
+	//}
 
 	return nil
 }

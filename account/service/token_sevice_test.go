@@ -52,14 +52,14 @@ func TestNewPairFromUser(t *testing.T) {
 			u.UID,
 			u.Email,
 			u.Name,
-			u.ImageURl,
+			u.ImageURL,
 			u.Website,
 		}
 		actualIDClaims := []interface{}{
 			idTokenClaims.User.UID,
 			idTokenClaims.User.Email,
 			idTokenClaims.User.Name,
-			idTokenClaims.User.ImageURl,
+			idTokenClaims.User.ImageURL,
 			idTokenClaims.User.Website,
 		}
 
