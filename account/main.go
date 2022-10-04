@@ -8,19 +8,23 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
-
-	"github.com/CasperDev394/golandvue/account/handler"
-	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	log.Println("Starting server...")
 
-	router := gin.Default()
+	// initialize data souces
+	ds, err := initDS()
 
-	handler.NewHandler(&handler.Config{
-		R: router,
-	})
+	if err != nil {
+		log.Fatalf("Unable to initialize data sources: %v\n", err)
+	}
+
+	router, err := inject(ds)
+
+	if err != nil {
+		log.Fatalf("Failure to inject data sources: %v\n", err)
+	}
 
 	srv := &http.Server{
 		Addr:    ":8080",
@@ -48,6 +52,11 @@ func main() {
 	// запроса, который он в данный момент обрабатывает
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
+
+	// shutdown data sources
+	if err := ds.close(); err != nil {
+		log.Fatalf("A problem occurred gracefully shutting down data sources: %v\n", err)
+	}
 
 	// Завершение работы сервера
 	log.Println("Shutting down server...")

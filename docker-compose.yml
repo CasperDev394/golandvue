@@ -16,17 +16,17 @@ services:
     volumes:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
-  postgres-auth:
+  postgres-account:
     image: "postgres:alpine"
     environment:
       - POSTGRES_PASSWORD=password
     ports:
-      - "5433:5433"
+      - "5432:5432"
     volumes:
-      - "pgdata_auth:/var/lib/postgresql/data"
+      - "pgdata_account:/var/lib/postgresql/data"
     command: ["postgres", "-c", "log_statement=all"]
   account:
-    env_file: .env.dev
+    env_file: ./account/.env.dev
     build:
       context: ./account
       target: builder
@@ -41,8 +41,8 @@ services:
     volumes:
       - ./account:/go/src/app
     depends_on:
-      - postgres-auth
+      - postgres-account
     # have to use $$ (double-dollar) so docker doesn't try to substitute a variable
     command: reflex -r "\.go$$" -s -- sh -c "go run ./"
 volumes:
-  pgdata_auth:
+  pgdata_account:
