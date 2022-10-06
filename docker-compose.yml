@@ -25,6 +25,12 @@ services:
     volumes:
       - "pgdata_account:/var/lib/postgresql/data"
     command: ["postgres", "-c", "log_statement=all"]
+  redis-account:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    volumes:
+      - "redisdata:/data"
   account:
     env_file: ./account/.env.dev
     build:
@@ -42,7 +48,9 @@ services:
       - ./account:/go/src/app
     depends_on:
       - postgres-account
+      - redis-account
     # have to use $$ (double-dollar) so docker doesn't try to substitute a variable
     command: reflex -r "\.go$$" -s -- sh -c "go run ./"
 volumes:
   pgdata_account:
+  redisdata:
