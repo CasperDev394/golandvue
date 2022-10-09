@@ -11,17 +11,17 @@ import (
 	"github.com/lib/pq"
 )
 
-type pgUserRepository struct {
+type pGUserRepository struct {
 	DB *sqlx.DB
 }
 
 func NewUserRepository(db *sqlx.DB) model.UserRepository {
-	return &pgUserRepository{
+	return &pGUserRepository{
 		DB: db,
 	}
 }
 
-func (r *pgUserRepository) Create(ctx context.Context, u *model.User) error {
+func (r *pGUserRepository) Create(ctx context.Context, u *model.User) error {
 	query := "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *"
 
 	if err := r.DB.GetContext(ctx, u, query, u.Email, u.Password); err != nil {
@@ -36,13 +36,26 @@ func (r *pgUserRepository) Create(ctx context.Context, u *model.User) error {
 	return nil
 }
 
-func (r *pgUserRepository) FindByID(ctx context.Context, uid uuid.UUID) (*model.User, error) {
+func (r *pGUserRepository) FindByID(ctx context.Context, uid uuid.UUID) (*model.User, error) {
 	user := &model.User{}
 
 	query := "SELECT * FROM users WHERE uid=$1"
 
 	if err := r.DB.GetContext(ctx, user, query, uid); err != nil {
 		return user, apperrors.NewNotFound("uid", uid.String())
+	}
+
+	return user, nil
+}
+
+func (r *pGUserRepository) FindByEmail(ctx context.Context, email string) (*model.User, error) {
+	user := &model.User{}
+
+	query := "SELECT * FROM users WHERE email=$1"
+
+	if err := r.DB.GetContext(ctx, user, query, email); err != nil {
+		log.Printf("Unable to get user with email address: %v. Err: %v\n", email, err)
+		return user, apperrors.NewNotFound("email", email)
 	}
 
 	return user, nil

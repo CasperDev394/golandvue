@@ -46,5 +46,22 @@ func (s *userService) Signup(ctx context.Context, u *model.User) error {
 }
 
 func (s *userService) Signin(ctx context.Context, u *model.User) error {
-	panic("Not implemented")
+	uFetched, err := s.UserRepository.FindByEmail(ctx, u.Email)
+
+	if err != nil {
+		return apperrors.NewAuthorization("Invalid email and password combination")
+	}
+
+	match, err := comparePasswords(uFetched.Password, u.Password)
+
+	if err != nil {
+		return apperrors.NewInternal()
+	}
+
+	if !match {
+		return apperrors.NewAuthorization("Invalid email and password combination")
+	}
+
+	u = uFetched
+	return nil
 }
