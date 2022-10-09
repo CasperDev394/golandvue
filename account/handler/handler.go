@@ -33,9 +33,11 @@ func NewHandler(c *Config) {
 
 	if gin.Mode() != gin.TestMode {
 		g.Use(middleware.Tomeout(c.TimeoutDuration, apperrors.NewServiceUnavailable()))
+		g.GET("/me", middleware.AuthUser(h.TokenService), h.Me)
+	} else {
+		g.GET("/me", h.Me)
 	}
 
-	g.GET("/me", h.Me)
 	g.POST("/signup", h.Signup)
 	g.POST("/signin", h.Signin)
 	g.POST("/signout", h.Signout)
