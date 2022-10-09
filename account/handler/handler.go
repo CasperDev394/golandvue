@@ -2,8 +2,11 @@ package handler
 
 import (
 	"net/http"
+	"time"
 
+	"github.com/CasperDev394/golandvue/account/handler/middleware"
 	"github.com/CasperDev394/golandvue/account/model"
+	"github.com/CasperDev394/golandvue/account/model/apperrors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,10 +16,11 @@ type Handler struct {
 }
 
 type Config struct {
-	R            *gin.Engine
-	UserService  model.UserService
-	TokenService model.TokenService
-	BaseURL      string
+	R               *gin.Engine
+	UserService     model.UserService
+	TokenService    model.TokenService
+	BaseURL         string
+	TimeoutDuration time.Duration
 }
 
 func NewHandler(c *Config) {
@@ -26,6 +30,10 @@ func NewHandler(c *Config) {
 	}
 
 	g := c.R.Group(c.BaseURL)
+
+	if gin.Mode() != gin.TestMode {
+		g.Use(middleware.Tomeout(c.TimeoutDuration, apperrors.NewServiceUnavailable()))
+	}
 
 	g.GET("/me", h.Me)
 	g.POST("/signup", h.Signup)
@@ -40,6 +48,7 @@ func NewHandler(c *Config) {
 
 // Signin handler
 func (h *Handler) Signin(c *gin.Context) {
+	time.Sleep(1 * time.Second)
 	c.JSON(http.StatusOK, gin.H{
 		"hello": "it's signin",
 	})

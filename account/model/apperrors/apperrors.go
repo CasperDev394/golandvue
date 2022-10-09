@@ -16,6 +16,7 @@ const (
 	NotFound             Type = "NOTFOUND"
 	PayloadTooLarge      Type = "PAYLOADTOOLARGE"
 	UnsupportedMediaType Type = "UNSUPPORTEDMEDIATYPE"
+	ServiceUnavailable   Type = "SERVICE_UNAVAILABLE"
 )
 
 type Error struct {
@@ -29,6 +30,8 @@ func (e *Error) Error() string {
 
 func (e *Error) Status() int {
 	switch e.Type {
+	case ServiceUnavailable:
+		return http.StatusServiceUnavailable
 	case Authorization:
 		return http.StatusUnauthorized
 	case BadRequest:
@@ -109,5 +112,13 @@ func NewUnsupportedMediaType(reason string) *Error {
 	return &Error{
 		Type:    UnsupportedMediaType,
 		Message: reason,
+	}
+}
+
+// NewServiceUnavailable to create an error for 503
+func NewServiceUnavailable() *Error {
+	return &Error{
+		Type:    ServiceUnavailable,
+		Message: fmt.Sprintf("Service unavailable or timed out"),
 	}
 }
