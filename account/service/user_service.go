@@ -44,3 +44,7 @@ func (s *userService) Signup(ctx context.Context, u *model.User) error {
 
 	return nil
 }
+
+func (s *userService) Signin(ctx context.Context, u *model.User) error {
+	panic("Not implemented")
+}
